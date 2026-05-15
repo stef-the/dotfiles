@@ -1,0 +1,83 @@
+# ─── macOS ────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+Icon?
+
+# ─── Windows ─────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ─── Linux ───────────────────────────────────────────────────
+*~
+.directory
+.Trash-*
+
+# ─── Editors / IDEs ──────────────────────────────────────────
+.idea/
+.vscode/settings.json
+.vscode/launch.json
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# ─── Node ────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log
+.pnpm-debug.log*
+
+# ─── Python ──────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ─── Java ────────────────────────────────────────────────────
+*.class
+*.jar
+*.war
+target/
+build/
+
+# ─── Rust ────────────────────────────────────────────────────
+target/
+Cargo.lock
+
+# ─── Environment / Secrets ───────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# ─── Claude ──────────────────────────────────────────────────
+.claude/
+
+# ─── Docker ──────────────────────────────────────────────────
+.docker/
+docker-compose.override.yml
+
+# ─── Misc ────────────────────────────────────────────────────
+*.log
+*.tmp
+*.bak
+*.orig
+.cache/

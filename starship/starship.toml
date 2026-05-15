@@ -1,0 +1,96 @@
+# Starship Prompt — Nord Theme
+# https://www.nordtheme.com/docs/colors-and-palettes
+#
+# Nord palette reference:
+#   nord0  #2E3440  (bg)       nord8  #88C0D0  (frost)
+#   nord1  #3B4252             nord9  #81A1C1  (frost)
+#   nord2  #434C5E             nord10 #5E81AC  (frost)
+#   nord3  #4C566A             nord11 #BF616A  (red)
+#   nord4  #D8DEE9  (fg)       nord12 #D08770  (orange)
+#   nord5  #E5E9F0             nord13 #EBCB8B  (yellow)
+#   nord6  #ECEFF4             nord14 #A3BE8C  (green)
+#   nord7  #8FBCBB  (frost)    nord15 #B48EAD  (purple)
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$java\
+$rust\
+$docker_context\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Wait 10ms for starship to check files (snappy)
+command_timeout = 500
+
+[character]
+success_symbol = "[>](bold #A3BE8C)"
+error_symbol = "[>](bold #BF616A)"
+vimcmd_symbol = "[<](bold #88C0D0)"
+
+[directory]
+style = "bold #81A1C1"
+truncation_length = 4
+truncate_to_repo = false
+fish_style_pwd_dir_length = 1
+
+[git_branch]
+format = "[$symbol$branch(:$remote_branch)]($style) "
+style = "#B48EAD"
+symbol = " "
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "#D08770"
+ahead = ""
+behind = ""
+diverged = ""
+modified = "!"
+staged = "+"
+untracked = "?"
+deleted = "x"
+
+[nodejs]
+format = "[$symbol($version)]($style) "
+style = "#A3BE8C"
+symbol = " "
+detect_files = ["package.json", ".nvmrc"]
+detect_extensions = []
+
+[python]
+format = "[$symbol($version)]($style) "
+style = "#EBCB8B"
+symbol = " "
+
+[java]
+format = "[$symbol($version)]($style) "
+style = "#D08770"
+symbol = " "
+
+[rust]
+format = "[$symbol($version)]($style) "
+style = "#BF616A"
+symbol = " "
+
+[docker_context]
+format = "[$symbol$context]($style) "
+style = "#88C0D0"
+symbol = " "
+
+[cmd_duration]
+min_time = 2000
+format = "[$duration]($style) "
+style = "#4C566A"
+
+[package]
+disabled = true
+
+[line_break]
+disabled = false
+
+[time]
+disabled = true

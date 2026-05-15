@@ -1,0 +1,74 @@
+# VS Code Extensions — install with:
+#   cat extensions.txt | grep -v '^#' | grep -v '^$' | xargs -L 1 code --install-extension
+
+# Theme & UI
+arcticicestudio.nord-visual-studio-code
+pkief.material-icon-theme
+seyyedkhandon.firacode
+
+# AI
+anthropic.claude-code
+
+# Git
+eamodio.gitlens
+mhutchie.git-graph
+
+# Svelte / Web
+svelte.svelte-vscode
+1yib.svelte-bundle
+fivethree.vscode-svelte-snippets
+pivaszbs.svelte-autoimport
+ardenivanov.svelte-intellisense
+
+# Tailwind CSS
+bradlc.vscode-tailwindcss
+austenc.tailwind-docs
+heybourn.headwind
+andrewmcodes.tailwindcss-extension-pack
+
+# HTML / CSS / JS
+ecmel.vscode-html-css
+paulmolluzzo.convert-css-in-js
+xabikos.javascriptsnippets
+esbenp.prettier-vscode
+christian-kohler.path-intellisense
+ms-vscode.vscode-typescript-next
+
+# Python
+ms-python.python
+ms-python.vscode-pylance
+ms-python.debugpy
+donjayamanne.python-environment-manager
+kevinrose.vsc-python-indent
+njpwerner.autodocstring
+
+# Jupyter
+ms-toolsai.jupyter
+ms-toolsai.jupyter-keymap
+ms-toolsai.jupyter-renderers
+
+# C / C++
+ms-vscode.cpptools
+ms-vscode.cpptools-extension-pack
+ms-vscode.cmake-tools
+ms-vscode.makefile-tools
+
+# Haskell
+haskell.haskell
+justusadam.language-haskell
+
+# Java (IntelliJ handles most Java, but just in case)
+# Install via Extension Pack if needed
+
+# Docker / Containers
+ms-azuretools.vscode-containers
+
+# Vim
+vscodevim.vim
+
+# Utilities
+tomoki1207.pdf
+mechatroner.rainbow-csv
+adpyke.codesnap
+ritwickdey.liveserver
+hmcalister.horizontal-line-comment
