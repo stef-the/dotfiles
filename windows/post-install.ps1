@@ -49,6 +49,7 @@ $packages = @(
     # Gaming
     "Valve.Steam"
     "RiotGames.LeagueOfLegends.EUW"   # Riot Client (Valorant installs from here)
+    "EpicGames.EpicGamesLauncher"     # Rocket League
     "PrismLauncher.PrismLauncher"
 
     # Social / Media
@@ -650,6 +651,12 @@ Wait-ForUser `
     "Install Valorant" `
     "Open Riot Client > Sign in > Install Valorant." `
     "Vanguard anti-cheat requires a restart after first install."
+
+# --- Rocket League ---
+Wait-ForUser `
+    "Install Rocket League" `
+    "Open Epic Games Launcher > Sign in > Install Rocket League (free to play)." `
+    ""
 
 # --- Discord ---
 Wait-ForUser `

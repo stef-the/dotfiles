@@ -122,6 +122,10 @@ alias dps="docker ps"
 # ─── iTerm2 Integration (macOS only) ─────────────────────────
 [[ -e "${HOME}/.iterm2_shell_integration.zsh" ]] && source "${HOME}/.iterm2_shell_integration.zsh"
 
+# ─── Local overrides ─────────────────────────────────────────
+# Source machine-specific config if it exists (not tracked in git)
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
 # ─── Startup ─────────────────────────────────────────────────
 if command -v pfetch &>/dev/null; then
   pfetch
