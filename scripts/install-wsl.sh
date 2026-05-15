@@ -44,7 +44,18 @@ sudo apt install -y \
     default-jdk \
     sqlite3 \
     libssl-dev \
-    pkg-config
+    pkg-config \
+    gpg
+
+# ─── Install eza (modern ls) ─────────────────────────────────
+echo "═══ Installing eza ═══"
+if ! command -v eza &>/dev/null; then
+    sudo mkdir -p /etc/apt/keyrings
+    wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+    sudo apt update
+    sudo apt install -y eza
+fi
 
 # ─── Set Zsh as default shell ────────────────────────────────
 echo "═══ Setting Zsh as default shell ═══"

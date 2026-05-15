@@ -68,13 +68,27 @@ setopt APPEND_HISTORY
 # ─── Key Bindings ─────────────────────────────────────────────
 bindkey -e  # emacs mode (ctrl-a, ctrl-e, etc.)
 
+# ─── eza (modern ls with icons) ───────────────────────────────
+if command -v eza &>/dev/null; then
+  alias ls="eza --icons"
+  alias ll="eza --icons -lah --git"
+  alias la="eza --icons -a"
+  alias lt="eza --icons --tree --level=2"
+else
+  alias ll="ls -lAh"
+  alias la="ls -A"
+fi
+
+# Auto-ls after cd
+function cd() {
+  builtin cd "$@" && ls
+}
+
 # ─── Aliases ──────────────────────────────────────────────────
 # Navigation
 alias ..="cd .."
 alias ...="cd ../.."
 alias ~="cd ~"
-alias ll="ls -lAh"
-alias la="ls -A"
 
 # Git
 alias gs="git status"
