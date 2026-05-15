@@ -60,7 +60,7 @@ $packages = @(
 
     # Dev Tools
     "Microsoft.VisualStudioCode"
-    "JetBrains.IntelliJIDEA.Community" # Swap to .Ultimate if you get edu license
+    "JetBrains.IntelliJIDEA.Ultimate"  # Free via JetBrains edu license (bristol.ac.uk email)
     "Git.Git"
     "GitHub.cli"
     "Docker.DockerDesktop"
