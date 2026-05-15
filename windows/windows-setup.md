@@ -62,10 +62,9 @@ sudo dd if=Win11_LTSC.iso of=/dev/rdisk4 bs=4m status=progress
 6. Create local account
 7. Decline all telemetry/tracking options
 
-### Partition Suggestion (optional, for dual-purpose)
-- **C:** 500GB — Windows + Programs
-- **D:** 1.5TB — Games, Projects, Media
-- Or just one big partition, your call
+### Partition
+Single 2TB partition is fine (one NVMe, no need to split). The post-install script
+creates a folder structure on C: to keep things organized (C:\Games, C:\Media, etc.).
 
 ---
 
@@ -133,13 +132,17 @@ Key manual steps:
 
 ---
 
-## Partition Recommendation
+## Folder Structure (on C:)
 
-Split the 2TB NVMe:
-- **C: 500GB** — Windows + Programs + WSL
-- **D: 1.5TB** — Games, Media, Backups
-
-This keeps Windows clean and lets you reinstall C: without losing game data.
+```
+C:\Games\Steam\         Steam library (steamapps, workshop, saves)
+C:\Media\Photography\   Photos
+C:\Media\Video\         Video projects
+C:\Media\Music\         Music
+C:\Backups\             Local backups
+%USERPROFILE%\Dev\      Dev projects, repos, scripts, tools
+(WSL) ~/                Main dev workspace (best IO performance)
+```
 
 ---
 

@@ -110,21 +110,18 @@ $folders = @(
     "$env:USERPROFILE\Dev\repos",
     "$env:USERPROFILE\Dev\scripts",
     "$env:USERPROFILE\Dev\tools",
-    "D:\Games",
-    "D:\Media",
-    "D:\Media\Photography",
-    "D:\Media\Video",
-    "D:\Media\Music",
-    "D:\Backups"
+    "C:\Games",
+    "C:\Games\Steam",
+    "C:\Media",
+    "C:\Media\Photography",
+    "C:\Media\Video",
+    "C:\Media\Music",
+    "C:\Backups"
 )
 
 foreach ($dir in $folders) {
-    if (Test-Path (Split-Path $dir -Qualifier)) {
-        New-Item -ItemType Directory -Path $dir -Force | Out-Null
-        Write-Host "  Created: $dir" -ForegroundColor Gray
-    } else {
-        Write-Host "  Skipped (drive not found): $dir" -ForegroundColor DarkGray
-    }
+    New-Item -ItemType Directory -Path $dir -Force | Out-Null
+    Write-Host "  Created: $dir" -ForegroundColor Gray
 }
 
 # ─── Step 5: Registry Tweaks ─────────────────────────────────
@@ -645,7 +642,7 @@ Wait-ForUser `
 # --- Steam ---
 Wait-ForUser `
     "Sign in to Steam" `
-    "Open Steam > Sign in. Set default install to D:\Games." `
+    "Open Steam > Sign in. Set library folder to C:\Games\Steam." `
     "Enable Steam > Settings > Downloads > 'Allow downloads during gameplay' OFF for Valorant perf."
 
 # --- Valorant ---
@@ -730,9 +727,9 @@ Write-Host "  ~\Dev\projects\    Windows-side projects (if any)" -ForegroundColo
 Write-Host "  ~\Dev\repos\       Cloned repos on Windows side" -ForegroundColor Gray
 Write-Host "  ~\Dev\scripts\     PowerShell scripts" -ForegroundColor Gray
 Write-Host "  ~\Dev\tools\       Portable tools" -ForegroundColor Gray
-Write-Host "  D:\Games\          Steam + other games" -ForegroundColor Gray
-Write-Host "  D:\Media\          Photography, video, music" -ForegroundColor Gray
-Write-Host "  D:\Backups\        Local backups" -ForegroundColor Gray
+Write-Host "  C:\Games\Steam\    Steam library (steamapps, workshop, etc.)" -ForegroundColor Gray
+Write-Host "  C:\Media\          Photography, video, music" -ForegroundColor Gray
+Write-Host "  C:\Backups\        Local backups" -ForegroundColor Gray
 Write-Host "  (WSL) ~/           Linux home — main dev work happens here" -ForegroundColor Gray
 Write-Host ""
 Write-Host "Tip: for best performance, keep code in the WSL filesystem (~/projects)" -ForegroundColor Yellow
