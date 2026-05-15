@@ -79,10 +79,32 @@ else
   alias la="ls -A"
 fi
 
-# Auto-ls after cd
-function cd() {
-  builtin cd "$@" && ls
-}
+# ─── bat (better cat) ─────────────────────────────────────────
+if command -v bat &>/dev/null; then
+  alias cat="bat --paging=never --style=plain"
+  alias catn="bat --paging=never"
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
+
+# ─── fzf (fuzzy finder) ──────────────────────────────────────
+if command -v fzf &>/dev/null; then
+  source <(fzf --zsh 2>/dev/null) || true
+  export FZF_DEFAULT_OPTS="--color=fg:#D8DEE9,bg:#2E3440,hl:#88C0D0 --color=fg+:#ECEFF4,bg+:#434C5E,hl+:#8FBCBB --color=info:#EBCB8B,prompt:#81A1C1,pointer:#BF616A --color=marker:#A3BE8C,spinner:#B48EAD,header:#88C0D0"
+fi
+
+# ─── zoxide (smart cd) ───────────────────────────────────────
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init zsh --cmd cd)"
+  # Auto-ls after cd (works with zoxide)
+  function cd() {
+    __zoxide_z "$@" && ls
+  }
+else
+  # Fallback: auto-ls after cd without zoxide
+  function cd() {
+    builtin cd "$@" && ls
+  }
+fi
 
 # ─── Aliases ──────────────────────────────────────────────────
 # Navigation
@@ -92,6 +114,7 @@ alias ~="cd ~"
 
 # Git
 alias gs="git status"
+alias lg="lazygit"
 alias ga="git add"
 alias gc="git commit"
 alias gp="git push"

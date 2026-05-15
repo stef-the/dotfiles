@@ -57,6 +57,25 @@ if ! command -v eza &>/dev/null; then
     sudo apt install -y eza
 fi
 
+# ─── Install CLI tools (bat, fzf, zoxide, lazygit) ───────────
+echo "═══ Installing CLI tools ═══"
+sudo apt install -y bat fzf zoxide
+
+# bat is installed as 'batcat' on Ubuntu — symlink it
+if command -v batcat &>/dev/null && ! command -v bat &>/dev/null; then
+    mkdir -p ~/.local/bin
+    ln -sf "$(which batcat)" ~/.local/bin/bat
+fi
+
+# lazygit (not in apt, install from GitHub)
+if ! command -v lazygit &>/dev/null; then
+    LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+    curl -Lo /tmp/lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+    tar xf /tmp/lazygit.tar.gz -C /tmp lazygit
+    sudo install /tmp/lazygit /usr/local/bin
+    rm /tmp/lazygit /tmp/lazygit.tar.gz
+fi
+
 # ─── Set Zsh as default shell ────────────────────────────────
 echo "═══ Setting Zsh as default shell ═══"
 if [[ "$SHELL" != *"zsh"* ]]; then

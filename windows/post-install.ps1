@@ -93,7 +93,8 @@ $packages = @(
     "voidtools.Everything"              # Fast file search
     "Flow-Launcher.Flow-Launcher"       # App launcher (like Spotlight)
     "Microsoft.PowerToys"               # Window management, FancyZones, etc.
-    "WinDirStat.WinDirStat"            # Disk space visualizer
+    "AntibodySoftware.WizTree"          # Fast disk space analyzer
+    "OBSProject.OBSStudio"              # Screen recording / streaming
     "REALiX.HWiNFO"                    # Hardware monitoring
 )
 
@@ -571,6 +572,18 @@ Wait-ForUser `
     "In WSL, run: claude --version (should be installed by install-wsl.sh)" `
     "Run 'claude' to authenticate. Claude agents will use WSL for most work."
 
+# --- SSH Keys ---
+Wait-ForUser `
+    "Generate SSH keys for GitHub" `
+    "In WSL, run: ssh-keygen -t ed25519 -C '75397677+stef-the@users.noreply.github.com'" `
+    "Then: cat ~/.ssh/id_ed25519.pub | clip.exe   and add it at github.com/settings/keys"
+
+# --- Git Credential Manager ---
+Wait-ForUser `
+    "Set up Git Credential Manager" `
+    "Git for Windows includes GCM. In WSL, run:" `
+    "git config --global credential.helper /mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
+
 # --- Docker ---
 Wait-ForUser `
     "Configure Docker Desktop" `
@@ -698,6 +711,12 @@ Wait-ForUser `
     "Set up Windows Terminal Nord theme" `
     "Open Windows Terminal Settings > Open JSON > Add Nord scheme from ~\nord-terminal-theme.json." `
     "Set Ubuntu profile: color scheme 'Nord', font 'MesloLGS NF', opacity 90%, acrylic on."
+
+# --- Nerd Font ---
+Wait-ForUser `
+    "Install MesloLGS Nerd Font" `
+    "Download from: github.com/ryanoasis/nerd-fonts/releases > MesloLGS NF" `
+    "Extract, select all .ttf files, right-click > Install for all users. Required for terminal/VS Code icons."
 
 # --- Everything Search ---
 Wait-ForUser `
