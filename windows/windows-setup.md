@@ -85,10 +85,22 @@ E:\dotfiles\windows\post-install.ps1
 This script handles:
 - Windows activation (MAS/HWID)
 - Debloat via Chris Titus WinUtil
-- All software installation via winget
-- WSL2 + Ubuntu setup
-- Registry tweaks for clean UI + gaming
-- NVIDIA driver setup prompt
+- All software installation via winget (30+ packages)
+- Folder structure creation (Dev, Games, Media, Backups)
+- Registry tweaks: clean UI, dark mode, taskbar auto-hide, left-align, no search/widgets
+- Telemetry and tracking fully disabled
+- Unnecessary services disabled (15+ services)
+- Ultimate Performance power plan enabled
+- CPU: all cores unparked, no throttling
+- GPU: hardware-accelerated scheduling, Game Bar disabled
+- PCIe power saving disabled, USB selective suspend off (for UMC22)
+- Nagle's algorithm disabled (lower network latency)
+- Startup apps cleaned (only essential apps auto-start)
+- WSL2 configured (.wslconfig: 16GB RAM, 8 cores)
+- PowerToys installed + config guidance
+- Weekly disk cleanup scheduled
+- Interactive wizard walks through all manual steps
+- GPU undervolt guide for the 3080 Ti
 
 ---
 
@@ -96,31 +108,60 @@ This script handles:
 
 ```bash
 # The post-install script will prompt you to run this:
-cd ~/dotfiles && bash scripts/install-wsl.sh
+git clone https://github.com/stef-the/dotfiles.git ~/dotfiles
+bash ~/dotfiles/scripts/install-wsl.sh
 ```
 
 ---
 
-## Phase 5: Manual Steps
+## Phase 5: Manual Steps (Interactive Wizard)
 
-These can't be fully automated:
+The post-install script has an interactive wizard that walks you through every step.
+After restart, run `.\post-install.ps1 -WizardOnly` to resume the wizard.
 
-1. **Zen Browser** — sign in with Firefox account to sync
-2. **1Password** — sign in and set up browser extension
-3. **Steam** — sign in, install games to D:\Games
-4. **Valorant** — install Riot Client, download Valorant
-5. **Discord** — sign in
-6. **Spotify** — sign in
-7. **Prism Launcher** — set up Minecraft (you said you'll handle this)
-8. **Behringer UMC22** — install ASIO driver from behringer.com/downloads
-9. **Tailscale** — sign in, reconnect to your network
-10. **VS Code** — Settings Sync should pull everything, or run extensions installer
-11. **IntelliJ IDEA** — sign in with JetBrains educational license
+Key manual steps:
+1. **WSL Ubuntu** — create user, run install-wsl.sh
+2. **NVIDIA drivers** — Game Ready Driver via NVIDIA App
+3. **GPU Undervolt** — MSI Afterburner, target ~1920MHz @ 875mV (see wizard guide)
+4. **Behringer UMC22** — ASIO driver from behringer.com
+5. **Tailscale** — sign in, reconnect to Linux box
+6. **Browser/Apps** — Zen Browser, 1Password, Steam, Valorant, Discord, Spotify
+7. **VS Code** — Settings Sync or manual extension install
+8. **IntelliJ Ultimate** — JetBrains edu license (bristol.ac.uk email)
+9. **PowerToys** — FancyZones layout, PowerToys Run (Alt+Space)
+10. **Windows Terminal** — Nord theme, MesloLGS NF font, acrylic background
+
+---
+
+## Partition Recommendation
+
+Split the 2TB NVMe:
+- **C: 500GB** — Windows + Programs + WSL
+- **D: 1.5TB** — Games, Media, Backups
+
+This keeps Windows clean and lets you reinstall C: without losing game data.
+
+---
+
+## Startup Apps (after cleanup)
+
+**Auto-start (essential):**
+- Vanguard (Valorant anti-cheat)
+- MSI Afterburner (GPU undervolt profile)
+- Tailscale (network)
+- 1Password (passwords)
+- Everything (file search)
+- PowerToys (window management)
+
+**Launch on demand (everything else):**
+- Steam, Discord, Spotify, Docker, Zen Browser, etc.
 
 ---
 
 ## Notes
 
-- **Drivers:** NVIDIA App handles GPU drivers. Motherboard drivers (LAN, audio, chipset) — check manufacturer's site.
-- **Windows Update:** LTSC gets security patches only. Run Windows Update after install to get latest patches.
-- **Backup:** Run `backup-discovery.sh` in WSL/Git Bash BEFORE wiping the drive (when you have the PSU).
+- **Drivers:** NVIDIA App handles GPU. Motherboard drivers (LAN, audio, chipset) — check manufacturer site.
+- **Windows Update:** LTSC gets security patches only. Run Windows Update after install.
+- **Backup:** Run `backup-discovery.sh` BEFORE wiping the drive.
+- **WSL performance:** Keep code in WSL filesystem (`~/`), NOT on `/mnt/c/` — cross-FS IO is 10x slower.
+- **Claude Code agents:** Primary dev work in WSL. 16GB RAM + 8 cores allocated. Docker available via Desktop integration.
