@@ -185,20 +185,150 @@ Write-Step "Setting power plan to High Performance"
 powercfg /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
 
 # ─── Summary ─────────────────────────────────────────────────
-Write-Step "POST-INSTALL COMPLETE"
+Write-Step "AUTOMATED INSTALL COMPLETE"
 Write-Host ""
 Write-Host "Installed:" -ForegroundColor Green
 foreach ($pkg in $packages) { Write-Host "  - $pkg" }
+
+# ─── Interactive Setup Wizard ─────────────────────────────────
+Write-Step "SETUP WIZARD — Manual Steps"
+Write-Host "I'll walk you through everything that needs manual attention." -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Manual steps remaining:" -ForegroundColor Yellow
-Write-Host "  1. RESTART the computer (for WSL + registry changes)"
-Write-Host "  2. Set up WSL (run install-wsl.sh after Ubuntu finishes setup)"
-Write-Host "  3. Sign in to: Zen Browser, 1Password, Steam, Discord, Spotify, Tailscale"
-Write-Host "  4. Install Behringer UMC22 ASIO drivers from behringer.com"
-Write-Host "  5. Install NVIDIA drivers via NVIDIA App"
-Write-Host "  6. Set up JetBrains educational license for IntelliJ"
-Write-Host "  7. Configure VS Code: Settings Sync or run extensions installer"
+
+function Wait-ForUser {
+    param([string]$Task, [string]$Detail, [string]$Hint = "")
+    Write-Host ""
+    Write-Host "[ ] $Task" -ForegroundColor Yellow
+    if ($Detail) { Write-Host "    $Detail" -ForegroundColor Gray }
+    if ($Hint) { Write-Host "    Hint: $Hint" -ForegroundColor DarkCyan }
+    Write-Host ""
+    $done = Read-Host "    Done? (y to continue, s to skip)"
+    if ($done -eq 'y') {
+        Write-Host "    [x] $Task" -ForegroundColor Green
+    } else {
+        Write-Host "    [-] Skipped: $Task" -ForegroundColor DarkGray
+    }
+}
+
+# --- Restart prompt ---
 Write-Host ""
-Write-Host "Press any key to restart, or Ctrl+C to skip restart..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-Restart-Computer
+Write-Host "A RESTART is needed for WSL and registry changes to take effect." -ForegroundColor Red
+Write-Host "After restart, run this script again with:" -ForegroundColor Yellow
+Write-Host '  .\post-install.ps1 -SkipActivation -SkipDebloat -SkipWSL' -ForegroundColor White
+Write-Host "to resume the interactive wizard, or continue now if you don't need WSL yet." -ForegroundColor Yellow
+Write-Host ""
+$restart = Read-Host "Restart now? (y = restart, n = continue wizard without restart)"
+if ($restart -eq 'y') {
+    Write-Host "Restarting in 5 seconds... Run the wizard again after reboot." -ForegroundColor Cyan
+    Start-Sleep -Seconds 5
+    Restart-Computer
+    exit
+}
+
+Write-Host ""
+Write-Host "═══ Continuing setup wizard... ═══" -ForegroundColor Cyan
+Write-Host ""
+
+# --- WSL Setup ---
+Wait-ForUser `
+    "Set up WSL Ubuntu" `
+    "Open Ubuntu from Start Menu. Create your username and password." `
+    "Use the same username as your Mac (stefanluke) for consistency."
+
+Wait-ForUser `
+    "Install dotfiles in WSL" `
+    "In the Ubuntu terminal, run:" `
+    "git clone https://github.com/stef-the/dotfiles.git ~/dotfiles && bash ~/dotfiles/scripts/install-wsl.sh"
+
+# --- NVIDIA ---
+Wait-ForUser `
+    "Set up NVIDIA drivers" `
+    "Open NVIDIA App (installed via winget). It will detect your 3080 Ti and offer the latest driver." `
+    "Use 'Game Ready Driver' for gaming. Enable Resizable BAR in NVIDIA Control Panel."
+
+# --- Audio ---
+Wait-ForUser `
+    "Install Behringer UMC22 drivers" `
+    "Download ASIO driver from: behringer.com/downloads > UMC22" `
+    "After install, set UMC22 as default audio output in Sound Settings."
+
+# --- Tailscale ---
+Wait-ForUser `
+    "Sign in to Tailscale" `
+    "Open Tailscale from system tray > Sign in with your account." `
+    "This reconnects you to your Linux box with 4TB storage."
+
+# --- Browser ---
+Wait-ForUser `
+    "Set up Zen Browser" `
+    "Open Zen Browser > Sign in with your Firefox account to sync from your Mac." `
+    "Bookmarks, extensions, and settings should sync automatically."
+
+# --- 1Password ---
+Wait-ForUser `
+    "Sign in to 1Password" `
+    "Open 1Password > Sign in with your account." `
+    "Install the browser extension in Zen Browser too."
+
+# --- Steam ---
+Wait-ForUser `
+    "Sign in to Steam" `
+    "Open Steam > Sign in." `
+    "Set game install location to D:\Games (or your preferred drive/partition)."
+
+# --- Valorant ---
+Wait-ForUser `
+    "Install Valorant" `
+    "Open Riot Client (installed as 'League of Legends EUW' package — it's the Riot launcher)." `
+    "Sign in to Riot account > Install Valorant from the launcher."
+
+# --- Discord ---
+Wait-ForUser `
+    "Sign in to Discord" `
+    "Open Discord > Sign in with your account." `
+    ""
+
+# --- Spotify ---
+Wait-ForUser `
+    "Sign in to Spotify" `
+    "Open Spotify > Sign in with your account." `
+    ""
+
+# --- VS Code ---
+Wait-ForUser `
+    "Configure VS Code" `
+    "Open VS Code. Either enable Settings Sync (GitHub account) or install extensions manually:" `
+    "In terminal: cat ~/dotfiles/vscode/extensions.txt | grep -v '^#' | grep -v '^$' | ForEach-Object { code --install-extension `$_ }"
+
+Wait-ForUser `
+    "Apply VS Code settings" `
+    "Copy settings: cp ~/dotfiles/vscode/settings.json `$env:APPDATA/Code/User/settings.json" `
+    "The Nord theme and all preferences will be applied."
+
+# --- IntelliJ ---
+Wait-ForUser `
+    "Set up IntelliJ IDEA Ultimate" `
+    "Open IntelliJ > Sign in with your JetBrains account (edu license)." `
+    "Apply at jetbrains.com/shop/eform/students with your @bristol.ac.uk email if you haven't already."
+
+# --- Windows Terminal ---
+Wait-ForUser `
+    "Set up Windows Terminal Nord theme" `
+    "Open Windows Terminal > Settings > Color Schemes > Open JSON file." `
+    "Add the Nord scheme from ~/nord-terminal-theme.json. Set Ubuntu profile to use 'Nord' scheme + 'MesloLGS NF' font."
+
+# --- Prism Launcher ---
+Wait-ForUser `
+    "Set up Prism Launcher (Minecraft)" `
+    "You said you'd handle this yourself!" `
+    ""
+
+# --- Done ---
+Write-Host ""
+Write-Host "═══════════════════════════════════════════════════════" -ForegroundColor Green
+Write-Host "  SETUP COMPLETE! Your PC is ready." -ForegroundColor Green
+Write-Host "═══════════════════════════════════════════════════════" -ForegroundColor Green
+Write-Host ""
+Write-Host "Your dotfiles are in ~/dotfiles (synced via git)." -ForegroundColor Cyan
+Write-Host "To update configs on both machines, edit the dotfiles repo and push." -ForegroundColor Cyan
+Write-Host ""
