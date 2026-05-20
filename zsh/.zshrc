@@ -92,20 +92,6 @@ if command -v fzf &>/dev/null; then
   export FZF_DEFAULT_OPTS="--color=fg:#D8DEE9,bg:#2E3440,hl:#88C0D0 --color=fg+:#ECEFF4,bg+:#434C5E,hl+:#8FBCBB --color=info:#EBCB8B,prompt:#81A1C1,pointer:#BF616A --color=marker:#A3BE8C,spinner:#B48EAD,header:#88C0D0"
 fi
 
-# ─── zoxide (smart cd) ───────────────────────────────────────
-if command -v zoxide &>/dev/null; then
-  eval "$(zoxide init zsh --cmd cd)"
-  # Auto-ls after cd (works with zoxide)
-  function cd() {
-    __zoxide_z "$@" && ls
-  }
-else
-  # Fallback: auto-ls after cd without zoxide
-  function cd() {
-    builtin cd "$@" && ls
-  }
-fi
-
 # ─── Aliases ──────────────────────────────────────────────────
 # Navigation
 alias ..="cd .."
@@ -154,5 +140,17 @@ if command -v pfetch &>/dev/null; then
   pfetch
 fi
 
-# ─── Starship Prompt (must be last) ──────────────────────────
+# ─── Starship Prompt ─────────────────────────────────────────
 eval "$(starship init zsh)"
+
+# ─── zoxide (must be last) ───────────────────────────────────
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init zsh --cmd cd)"
+  function cd() {
+    __zoxide_z "$@" && ls
+  }
+else
+  function cd() {
+    builtin cd "$@" && ls
+  }
+fi
