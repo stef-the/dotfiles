@@ -145,7 +145,6 @@ eval "$(starship init zsh)"
 
 # ─── zoxide (must be last) ───────────────────────────────────
 if command -v zoxide &>/dev/null; then
-  export ZOXIDE_QUIET=1
   eval "$(zoxide init zsh --cmd cd)"
   function cd() {
     __zoxide_z "$@" && ls
