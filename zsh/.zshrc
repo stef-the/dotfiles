@@ -155,3 +155,8 @@ else
     builtin cd "$@" && ls
   }
 fi
+
+# Start in home dir, not the Windows path WSL inherits (/mnt/c/...)
+if [[ -n "$WSL_DISTRO_NAME" && "$PWD" == /mnt/* ]]; then
+  cd ~
+fi
