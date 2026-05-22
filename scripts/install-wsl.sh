@@ -35,7 +35,7 @@ sudo apt install -y \
     tree \
     jq \
     htop \
-    neofetch \
+    fastfetch \
     zsh-autosuggestions \
     zsh-syntax-highlighting \
     python3 \
