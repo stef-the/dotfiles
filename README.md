@@ -14,6 +14,11 @@ dotfiles/
 ├── vscode/settings.json     # VS Code settings (Nord theme)
 ├── vscode/extensions.txt    # VS Code extensions list
 ├── windows/
+│   ├── powershell/Microsoft.PowerShell_profile.ps1  # PowerShell profile (zsh-style: oh-my-posh, eza, bat, zoxide, fzf)
+│   ├── oh-my-posh/blue-owl.omp.json    # Oh My Posh prompt theme
+│   ├── windows-terminal/settings.json  # Windows Terminal config
+│   ├── fastfetch/config.jsonc          # Fastfetch system-info banner
+│   ├── fastfetch/pkgs.ps1              # Fastfetch package-count module
 │   ├── windows-setup.md     # Clean install guide for Win11 LTSC
 │   └── post-install.ps1     # Automated post-install script
 ├── scripts/

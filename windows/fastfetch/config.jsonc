@@ -1,0 +1,23 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "type": "data",
+        "color": { "1": "38;2;0;120;215" },
+        "padding": { "top": 0, "right": 3 },
+        "source": "$1██████ ██████\n$1██████ ██████\n$1██████ ██████\n\n$1██████ ██████\n$1██████ ██████\n$1██████ ██████"
+    },
+    "display": {
+        "separator": " ",
+        "key": { "width": 9 },
+        "size": { "maxPrefix": "MB", "binaryPrefix": "iec", "ndigits": 0 }
+    },
+    "modules": [
+        "title",
+        { "type": "os",      "key": "os" },
+        { "type": "os",      "key": "host",   "format": "{arch}" },
+        { "type": "kernel",  "key": "kernel" },
+        { "type": "uptime",  "key": "uptime" },
+        { "type": "command", "key": "pkgs",   "text": "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Users\\stef\\.config\\fastfetch\\pkgs.ps1" },
+        { "type": "memory",  "key": "memory", "format": "{used} / {total}" }
+    ]
+}
