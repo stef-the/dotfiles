@@ -84,7 +84,7 @@ E:\dotfiles\windows\post-install.ps1
 This script handles:
 - Windows activation (MAS/HWID)
 - Debloat via Chris Titus WinUtil
-- All software installation via winget (30+ packages)
+- All software installation via winget (40+ packages), plus Chocolatey for the handful winget doesn't carry (VB-Audio VB-CABLE)
 - Folder structure creation (Dev, Games, Media, Backups)
 - Registry tweaks: clean UI, dark mode, taskbar auto-hide, left-align, no search/widgets
 - Telemetry and tracking fully disabled
@@ -158,6 +158,58 @@ C:\Backups\             Local backups
 
 **Launch on demand (everything else):**
 - Steam, Discord, Spotify, Docker, Zen Browser, etc.
+
+---
+
+## System Snapshot (last verified 2026-09-05)
+
+A point-in-time record of what's actually on the machine, kept here so a future
+rebuild has a ground truth to check `post-install.ps1`'s package list against.
+Update this section whenever you do a real audit — it will drift otherwise.
+
+**Peripherals:** Blue Yeti X mic (Logitech G Blue VO!CE / HX2E), Sony WH-1000XM3
+Bluetooth headphones, BenQ ZOWIE XL monitor, Logitech G mouse/keyboard (G HUB),
+a USB macro pad (not friendly-named in Device Manager — identify visually if
+replacing).
+
+**Audio devices:** Realtek HD Audio (onboard), NVIDIA HDMI audio, Sonic Studio
+Virtual Mixer (motherboard audio suite), VB-Audio Virtual Cable (installed
+2026-09-05 via Chocolatey — see package list above).
+
+**Network:** Tailscale installed as a service (connects to the Linux box).
+WSL has two distros registered: `Ubuntu` (primary dev env) and `docker-desktop`
+(auto-created by Docker Desktop's WSL integration — not something to install
+separately).
+
+**Power:** Ultimate Performance power plan confirmed active (this plan is
+hidden by default in Win11 — `post-install.ps1` unhides and activates it).
+
+**Dev environment:**
+- Repos under `~/Dev/repos/`: `dotfiles`, `mc-server`, `00start.com`, `stef-cv`,
+  `00start/codex-proxy`, `00start/riskscan` (+ a `riskscan-dataroom-fix`
+  checkout of the same remote). **`music-visualizer` has no git remote and no
+  commits pushed anywhere — it will be lost on a wipe unless pushed first.**
+- Toolchains: Node (plain install, not nvm-windows, on the Windows side —
+  nvm/NVM-managed Node lives inside WSL instead), Python 3.13, Git, Rust via
+  rustup, Docker Desktop. Go is not installed.
+- SSH keys in `C:\Users\stef\.ssh\`: `id_ed25519_github`, `id_ed25519_dev_server`
+  — separate from the WSL-side `~/.ssh` (WSL has its own keypair).
+- VS Code: ~48 extensions (GitLens, Remote-SSH/WSL/Containers, Python/Pylance,
+  Tailscale, Nord theme, Material Icons, Vim).
+
+**Known gaps as of this snapshot:**
+- The **F:\ backup drive was not attached** when this snapshot was taken —
+  reattach and re-verify `F:\PC Backup\` and `F:\Dotfiles\` still hold what
+  the restore tables below expect before relying on them.
+- The frozen copy at `Documents\setup info\Dotfiles\` had drifted from this
+  repo (missing the `powershell/`, `oh-my-posh/`, `windows-terminal/`,
+  `fastfetch/` additions) — re-synced from this repo on 2026-09-05. Re-sync it
+  again any time this repo's `windows/` (or other) content changes, since the
+  whole point of that copy is to be readable before git/network is available.
+- Chocolatey's `vb-cable` package installs the wrong-architecture driver on
+  64-bit Windows (uses a 32-bit INF via `rundll32` regardless of OS arch) —
+  `post-install.ps1` now runs the real `VBCABLE_Setup_x64.exe -i -h` after it
+  as a workaround. Re-check if the choco package ever gets fixed upstream.
 
 ---
 

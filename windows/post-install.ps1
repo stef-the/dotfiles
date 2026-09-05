@@ -51,6 +51,9 @@ $packages = @(
     "RiotGames.LeagueOfLegends.EUW"   # Riot Client (Valorant installs from here)
     "EpicGames.EpicGamesLauncher"     # Rocket League
     "PrismLauncher.PrismLauncher"
+    "ElectronicArts.EADesktop"
+    "ParadoxInteractive.ParadoxLauncher"
+    "Nicotine+.Nicotine+"
 
     # Social / Media
     "Discord.Discord"
@@ -61,6 +64,14 @@ $packages = @(
 
     # Terminal & Shell
     "Microsoft.WindowsTerminal"
+    "Microsoft.PowerShell"             # PowerShell 7 (pwsh) — profile targets this, not Windows PowerShell 5.1
+    "sharkdp.bat"
+    "dandavison.delta"
+    "eza-community.eza"
+    "junegunn.fzf"
+    "ajeetdsouza.zoxide"
+    "Fastfetch-cli.Fastfetch"
+    "JanDeDobbeleer.OhMyPosh"
 
     # Dev Tools
     "Microsoft.VisualStudioCode"
@@ -73,18 +84,34 @@ $packages = @(
     "EclipseAdoptium.Temurin.17.JDK"   # OpenJDK 17
     "GnuWin32.Make"
     "Rustlang.Rustup"
+    "jqlang.jq"
+    "MikeFarah.yq"
 
     # Security & Auth
     "AgileBits.1Password"
     "AgileBits.1Password.CLI"
 
     # GPU & Hardware
-    "Nvidia.GeForceExperience"          # NVIDIA App
     "Guru3D.Afterburner"                # MSI Afterburner — GPU undervolt + monitoring
+    "Geeks3D.FurMark.1"                 # GPU stress test (verify undervolt stability)
+    "Logitech.GHUB"                     # Mouse/keyboard/Blue VO!CE (Yeti X)
+    "Asus.DisplayWidgetCenter"
+    "Intel.IntelDriverAndSupportAssistant"
+    # NOTE: NVIDIA App replaced GeForce Experience and isn't reliably on winget as of 2026 —
+    # download it manually from nvidia.com/en-us/software/nvidia-app/ instead.
 
     # Networking
     "Tailscale.Tailscale"
     "Cloudflare.cloudflared"
+
+    # Media/creative
+    "BlenderFoundation.Blender"
+    "darktable.darktable"
+    "Gyan.FFmpeg"
+    "PeterPawlowski.foobar2000"
+    "AlexanderKojevnikov.Spek"
+    "oschwartz10612.Poppler"
+    # DaVinci Resolve is manual-download only (blackmagicdesign.com) — no winget package.
 
     # Utilities
     "7zip.7zip"
@@ -102,6 +129,27 @@ foreach ($pkg in $packages) {
     Write-Host "Installing $pkg..." -ForegroundColor Yellow
     winget install --id $pkg --accept-package-agreements --accept-source-agreements --silent
 }
+
+# ─── Step 3b: Chocolatey (for packages winget doesn't carry) ──
+Write-Step "Installing Chocolatey + choco-only packages"
+
+if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+}
+
+$chocoPackages = @(
+    "vb-cable"          # VB-Audio VB-CABLE — not on winget. NOTE: this choco package's driver
+                        # install step is 32-bit only on x64 Windows (confirmed broken 2026-09-05).
+                        # After `choco install vb-cable`, also run the real 64-bit installer manually:
+                        #   C:\ProgramData\chocolatey\lib\vb-cable\tools\VBCABLE_Setup_x64.exe -i -h
+    "autohotkey.install" # already covered by winget's AutoHotkey.AutoHotkey above if you keep only one
+)
+foreach ($pkg in $chocoPackages) {
+    choco install $pkg -y --no-progress
+}
+& "C:\ProgramData\chocolatey\lib\vb-cable\tools\VBCABLE_Setup_x64.exe" -i -h
 
 # ─── Step 4: Create Folder Structure ─────────────────────────
 Write-Step "Creating folder structure"
@@ -559,7 +607,7 @@ Write-Host ""
 Wait-ForUser `
     "Set up WSL Ubuntu" `
     "Open Ubuntu from Start Menu. Create your username and password." `
-    "Use the same username as your Mac (stefanluke) for consistency."
+    "Windows account username on this machine is 'stef' — use the same in WSL for consistency."
 
 Wait-ForUser `
     "Install dotfiles in WSL" `
