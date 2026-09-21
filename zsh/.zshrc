@@ -159,3 +159,10 @@ fi
 if [[ -n "$WSL_DISTRO_NAME" && "$PWD" == /mnt/* ]]; then
   cd ~
 fi
+
+# bun completions
+[ -s "/Users/stefanluke/.bun/_bun" ] && source "/Users/stefanluke/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

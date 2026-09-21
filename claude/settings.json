@@ -1,9 +1,11 @@
 {
+  "model": "sonnet",
   "enabledPlugins": {
     "clangd-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "caveman@caveman": true
   },
   "extraKnownMarketplaces": {
     "claude-code-plugins": {
@@ -11,7 +13,15 @@
         "source": "github",
         "repo": "anthropics/claude-code"
       }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
     }
   },
-  "syntaxHighlightingDisabled": false
+  "syntaxHighlightingDisabled": false,
+  "tui": "fullscreen",
+  "enableWorkflows": true
 }

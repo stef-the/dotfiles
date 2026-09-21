@@ -24,8 +24,8 @@ $cmd_duration\
 $line_break\
 $character"""
 
-# Wait 10ms for starship to check files (snappy)
-command_timeout = 500
+# Give detectors enough headroom for cold-start binaries (e.g. nvm-managed node)
+command_timeout = 2000
 
 [character]
 success_symbol = "[>](bold #A3BE8C)"
