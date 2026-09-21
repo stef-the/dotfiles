@@ -62,6 +62,9 @@ $packages = @(
     # Terminal & Shell
     "Microsoft.WindowsTerminal"
 
+    # Notes
+    "Obsidian.Obsidian"
+
     # Dev Tools
     "Microsoft.VisualStudioCode"
     "JetBrains.IntelliJIDEA.Ultimate"  # Free via JetBrains edu license (bristol.ac.uk email)
@@ -589,6 +592,12 @@ Wait-ForUser `
     "Configure Docker Desktop" `
     "Open Docker Desktop > Settings > Resources > WSL Integration > enable Ubuntu" `
     "This lets you use 'docker' commands inside WSL. Also set memory limit to 8GB."
+
+# --- Obsidian Sync ---
+Wait-ForUser `
+    "Set up Obsidian self-hosted sync" `
+    "In an elevated PowerShell, run: ~\dotfiles\windows\obsidian-livesync-setup.ps1" `
+    "Spins up CouchDB in Docker, locked to this PC's Tailscale IP. See windows/obsidian-livesync-setup.ps1 for the plugin config to use on each device."
 
 # --- NVIDIA ---
 Wait-ForUser `
