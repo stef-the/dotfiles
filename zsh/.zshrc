@@ -22,6 +22,11 @@ elif [[ -s "$NVM_DIR/nvm.sh" ]]; then
   [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
 fi
 
+# nvm.sh only defines the `nvm` function — it doesn't activate a version on
+# its own, so node/npx/npm-installed globals (wrangler, etc.) aren't on PATH
+# until this runs.
+command -v nvm >/dev/null && nvm use default --silent
+
 # ─── Java ─────────────────────────────────────────────────────
 if [[ -d "/opt/homebrew/opt/openjdk@17/bin" ]]; then
   export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
