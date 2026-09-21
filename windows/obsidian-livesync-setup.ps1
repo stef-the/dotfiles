@@ -61,8 +61,8 @@ if (Test-Path $envFile) {
     Write-Host ".env already exists, reusing existing credentials." -ForegroundColor Yellow
     $couchPassword = (Get-Content $envFile | Select-String "COUCHDB_PASSWORD=(.+)").Matches.Groups[1].Value
 } else {
-    Add-Type -AssemblyName System.Web
-    $couchPassword = [System.Web.Security.Membership]::GeneratePassword(24, 4) -replace '[^a-zA-Z0-9]', ''
+    $alnum = 48..57 + 65..90 + 97..122
+    $couchPassword = -join (1..24 | ForEach-Object { [char](Get-Random -InputObject $alnum) })
     @"
 COUCHDB_USER=admin
 COUCHDB_PASSWORD=$couchPassword
