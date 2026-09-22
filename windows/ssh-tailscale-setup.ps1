@@ -41,12 +41,44 @@ Write-Host "Tailscale IP: $tsIp" -ForegroundColor Green
 # ─── Step 2: Install OpenSSH Server ─────────────────────────────
 Write-Step "Installing OpenSSH Server"
 
-$capability = Get-WindowsCapability -Online -Name "OpenSSH.Server*"
-if ($capability.State -ne "Installed") {
-    Add-WindowsCapability -Online -Name $capability.Name | Out-Null
-    Write-Host "OpenSSH Server installed." -ForegroundColor Green
-} else {
+if (Get-Service sshd -ErrorAction SilentlyContinue) {
     Write-Host "OpenSSH Server already installed." -ForegroundColor Yellow
+} else {
+    # Prefer the PowerShell capability cmdlets, but their COM wrapper is known to
+    # break on some images ("Class not registered") even though dism.exe itself
+    # still works fine underneath it - fall back to that directly.
+    $installed = $false
+    try {
+        $capability = Get-WindowsCapability -Online -Name "OpenSSH.Server*" -ErrorAction Stop
+        if ($capability.State -ne "Installed") {
+            Add-WindowsCapability -Online -Name $capability.Name -ErrorAction Stop | Out-Null
+        }
+        $installed = $true
+    } catch {
+        Write-Host "Get-WindowsCapability unavailable ($($_.Exception.Message)), trying dism.exe directly." -ForegroundColor Yellow
+    }
+
+    if (-not $installed) {
+        dism.exe /Online /Add-Capability /CapabilityName:OpenSSH.Server~~~~0.0.1.0 /NoRestart | Out-Null
+        if ($LASTEXITCODE -eq 0 -and (Get-Command sshd -ErrorAction SilentlyContinue -CommandType Application)) {
+            $installed = $true
+        }
+    }
+
+    if (-not $installed) {
+        Write-Host "dism.exe also failed, installing OpenSSH from the upstream binary release instead." -ForegroundColor Yellow
+        $installDir = "$env:ProgramFiles\OpenSSH"
+        $zipPath = "$env:TEMP\OpenSSH-Win64.zip"
+        $release = Invoke-RestMethod "https://api.github.com/repos/PowerShell/Win32-OpenSSH/releases/latest"
+        $asset = $release.assets | Where-Object { $_.name -eq "OpenSSH-Win64.zip" }
+        Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $zipPath
+        Expand-Archive -Path $zipPath -DestinationPath $env:ProgramFiles -Force
+        Rename-Item "$env:ProgramFiles\OpenSSH-Win64" $installDir -ErrorAction SilentlyContinue
+        & "$installDir\install-sshd.ps1"
+        $env:Path += ";$installDir"
+        [Environment]::SetEnvironmentVariable("Path", "$([Environment]::GetEnvironmentVariable('Path','Machine'));$installDir", "Machine")
+    }
+    Write-Host "OpenSSH Server installed." -ForegroundColor Green
 }
 
 # ─── Step 3: Start and enable the service ──────────────────────
