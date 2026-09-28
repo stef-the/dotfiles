@@ -1,4 +1,11 @@
 # ═══════════════════════════════════════════════════════════════
+# SUPERSEDED (2026-09-28) — do not run this. The canonical CouchDB
+# instance now lives on pop-os instead of stef-desktop, so every
+# device shares one backend. Running this would spin up a second,
+# disconnected sync target. See docs/pop-os-services.md.
+# Kept here only for reference (e.g. if pop-os is ever retired).
+# ═══════════════════════════════════════════════════════════════
+#
 # Obsidian Self-Hosted LiveSync — CouchDB backend
 # Run as Administrator in PowerShell, on the machine that will
 # act as the sync host (stef-desktop).
