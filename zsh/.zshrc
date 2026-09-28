@@ -32,6 +32,10 @@ if [[ -d "/opt/homebrew/opt/openjdk@17/bin" ]]; then
   export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 fi
 
+# ─── Go ───────────────────────────────────────────────────────
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
+
 # ─── Zsh Plugins ──────────────────────────────────────────────
 # Homebrew-installed plugins (macOS)
 if [[ -d /opt/homebrew/share ]]; then
