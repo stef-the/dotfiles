@@ -6,9 +6,14 @@ arcticicestudio.nord-visual-studio-code
 teabyii.ayu
 pkief.material-icon-theme
 seyyedkhandon.firacode
+github.github-vscode-theme
+johnpapa.vscode-peacock
 
 # AI
 anthropic.claude-code
+andrepimenta.claude-code-chat
+ollama.ollama
+vizards.deepseek-v4-for-copilot
 
 # Git
 eamodio.gitlens
@@ -35,6 +40,11 @@ xabikos.javascriptsnippets
 esbenp.prettier-vscode
 christian-kohler.path-intellisense
 ms-vscode.vscode-typescript-next
+typescriptteam.native-preview
+anseki.vscode-color
+unifiedjs.vscode-mdx
+wholroyd.jinja
+repreng.csv
 
 # Python
 ms-python.python
@@ -42,8 +52,10 @@ ms-python.vscode-pylance
 ms-python.debugpy
 ms-python.vscode-python-envs
 donjayamanne.python-environment-manager
+donjayamanne.python-extension-pack
 kevinrose.vsc-python-indent
 njpwerner.autodocstring
+batisteo.vscode-django
 
 # Jupyter
 ms-toolsai.jupyter
@@ -64,10 +76,20 @@ ms-vscode.makefile-tools
 # toolchain runs in WSL Ubuntu — golang.go covers both via Remote-WSL)
 golang.go
 
+# C# / .NET
+ms-dotnettools.csdevkit
+ms-dotnettools.csharp
+ms-dotnettools.vscode-dotnet-runtime
+
 # Haskell
 haskell.haskell
 haskell.language-haskell
 justusadam.language-haskell
+ndmitchell.haskell-ghcid
+
+# Embedded / Hardware
+mshr-h.veriloghdl
+platformio.platformio-ide
 
 # Remote Development
 ms-vscode-remote.vscode-remote-extensionpack
@@ -87,6 +109,9 @@ tailscale.vscode-tailscale
 # Docker / Containers
 ms-azuretools.vscode-containers
 
+# Electron
+kuscamara.electron
+
 # Vim
 vscodevim.vim
 
@@ -97,3 +122,4 @@ adpyke.codesnap
 ritwickdey.liveserver
 hmcalister.horizontal-line-comment
 ys-cho.raw-viewer
+zeithaste.cursorcharcode
