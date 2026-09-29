@@ -34,6 +34,10 @@ ln -sf "$DOTFILES_DIR/starship/starship.toml" ~/.config/starship.toml
 mkdir -p ~/.claude
 ln -sf "$DOTFILES_DIR/claude/settings.json" ~/.claude/settings.json
 
+# Claude skills (user-level, works from any repo)
+mkdir -p ~/.claude/skills
+ln -sf "$DOTFILES_DIR/claude/skills/rescan" ~/.claude/skills/rescan
+
 echo ""
 echo "═══ DONE ═══"
 echo ""
@@ -43,6 +47,7 @@ echo "  ~/.gitconfig -> dotfiles/git/.gitconfig"
 echo "  ~/.gitignore_global -> dotfiles/git/.gitignore_global"
 echo "  ~/.config/starship.toml -> dotfiles/starship/starship.toml"
 echo "  ~/.claude/settings.json -> dotfiles/claude/settings.json"
+echo "  ~/.claude/skills/rescan -> dotfiles/claude/skills/rescan"
 echo ""
 echo "Run: exec zsh   to reload your shell"
 echo ""
