@@ -1,11 +1,9 @@
 {
-  "workbench.colorTheme": "Nord",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.startupEditor": "none",
   "workbench.activityBar.location": "top",
-  "workbench.sideBar.location": "right",
 
-  "editor.fontFamily": "'FiraCode Nerd Font', 'MesloLGS NF', 'Fira Code', Consolas, monospace",
+  "editor.fontFamily": "Fira Code",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
   "editor.lineHeight": 1.6,
@@ -21,7 +19,16 @@
 
   "terminal.integrated.fontFamily": "'MesloLGS NF', 'FiraCode Nerd Font Mono', monospace",
   "terminal.integrated.fontSize": 13,
-  "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell 7": {
+      "path": [
+        "pwsh.exe",
+        "${env:LOCALAPPDATA}\\Microsoft\\WindowsApps\\pwsh.exe",
+      ],
+      "icon": "terminal-powershell",
+    },
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell 7",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "terminal.integrated.defaultProfile.osx": "zsh",
 
@@ -43,22 +50,22 @@
   "prettier.tabWidth": 2,
 
   "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
+    "editor.defaultFormatter": "svelte.svelte-vscode",
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
 
   "vim.handleKeys": {
@@ -66,6 +73,18 @@
     "<C-v>": false,
     "<C-x>": false,
     "<C-a>": false,
-    "<C-f>": false
-  }
+    "<C-f>": false,
+  },
+  "workbench.colorTheme": "Monokai Dimmed",
+  "security.allowedUNCHosts": ["wsl.localhost"],
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "claudeCode.hideOnboarding": true,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+  },
 }

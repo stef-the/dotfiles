@@ -3,6 +3,7 @@
 
 # Theme & UI
 arcticicestudio.nord-visual-studio-code
+teabyii.ayu
 pkief.material-icon-theme
 seyyedkhandon.firacode
 
@@ -25,6 +26,7 @@ bradlc.vscode-tailwindcss
 austenc.tailwind-docs
 heybourn.headwind
 andrewmcodes.tailwindcss-extension-pack
+macieklad.tailwind-sass-syntax
 
 # HTML / CSS / JS
 ecmel.vscode-html-css
@@ -38,6 +40,7 @@ ms-vscode.vscode-typescript-next
 ms-python.python
 ms-python.vscode-pylance
 ms-python.debugpy
+ms-python.vscode-python-envs
 donjayamanne.python-environment-manager
 kevinrose.vsc-python-indent
 njpwerner.autodocstring
@@ -46,16 +49,37 @@ njpwerner.autodocstring
 ms-toolsai.jupyter
 ms-toolsai.jupyter-keymap
 ms-toolsai.jupyter-renderers
+ms-toolsai.vscode-jupyter-cell-tags
+ms-toolsai.vscode-jupyter-slideshow
 
 # C / C++
 ms-vscode.cpptools
 ms-vscode.cpptools-extension-pack
+ms-vscode.cpptools-themes
+ms-vscode.cpp-devtools
 ms-vscode.cmake-tools
 ms-vscode.makefile-tools
 
+# Go (winget-installed on Windows for general use; Computer Systems A course
+# toolchain runs in WSL Ubuntu — golang.go covers both via Remote-WSL)
+golang.go
+
 # Haskell
 haskell.haskell
+haskell.language-haskell
 justusadam.language-haskell
+
+# Remote Development
+ms-vscode-remote.vscode-remote-extensionpack
+ms-vscode-remote.remote-wsl
+ms-vscode-remote.remote-ssh
+ms-vscode-remote.remote-ssh-edit
+ms-vscode-remote.remote-containers
+ms-vscode.remote-explorer
+ms-vscode.remote-server
+
+# Tailscale
+tailscale.vscode-tailscale
 
 # Java (IntelliJ handles most Java, but just in case)
 # Install via Extension Pack if needed
@@ -72,3 +96,4 @@ mechatroner.rainbow-csv
 adpyke.codesnap
 ritwickdey.liveserver
 hmcalister.horizontal-line-comment
+ys-cho.raw-viewer
