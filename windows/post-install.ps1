@@ -87,6 +87,7 @@ $packages = @(
     "EclipseAdoptium.Temurin.17.JDK"   # OpenJDK 17
     "GnuWin32.Make"
     "Rustlang.Rustup"
+    "GoLang.Go"
     "jqlang.jq"
     "MikeFarah.yq"
 
