@@ -47,8 +47,10 @@
   "git.enableSmartCommit": true,
 
   "security.allowedUNCHosts": ["wsl.localhost"],
+  "security.workspace.trust.untrustedFiles": "open",
 
   "claudeCode.hideOnboarding": true,
+  "claudeCode.archiveInactiveSessions": 7,
 
   "prettier.singleQuote": true,
   "prettier.semi": false,

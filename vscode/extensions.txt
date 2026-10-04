@@ -103,8 +103,14 @@ ms-vscode.remote-server
 # Tailscale
 tailscale.vscode-tailscale
 
-# Java (IntelliJ handles most Java, but just in case)
-# Install via Extension Pack if needed
+# Java
+redhat.java
+vscjava.vscode-java-pack
+vscjava.vscode-gradle
+vscjava.vscode-java-debug
+vscjava.vscode-java-dependency
+vscjava.vscode-java-test
+vscjava.vscode-maven
 
 # Docker / Containers
 ms-azuretools.vscode-containers
