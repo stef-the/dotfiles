@@ -79,6 +79,7 @@ $packages = @(
     # Dev Tools
     "Microsoft.VisualStudioCode"
     "JetBrains.IntelliJIDEA.Ultimate"  # Free via JetBrains edu license (bristol.ac.uk email)
+    "Google.AndroidStudio"
     "Git.Git"
     "GitHub.cli"
     "Docker.DockerDesktop"
@@ -90,6 +91,8 @@ $packages = @(
     "GoLang.Go"
     "jqlang.jq"
     "MikeFarah.yq"
+    "Postman.Postman"
+    "Ollama.Ollama"                    # local LLM runner — see ~/Dev/repos/ai-stack-notes
 
     # Security & Auth
     "AgileBits.1Password"
@@ -111,11 +114,21 @@ $packages = @(
     # Media/creative
     "BlenderFoundation.Blender"
     "darktable.darktable"
+    "Audacity.Audacity"
     "Gyan.FFmpeg"
     "PeterPawlowski.foobar2000"
     "AlexanderKojevnikov.Spek"
     "oschwartz10612.Poppler"
+    "qBittorrent.qBittorrent"
     # DaVinci Resolve is manual-download only (blackmagicdesign.com) — no winget package.
+    # Autodesk Fusion is manual-download only (autodesk.com/fusion) — education license, no winget package.
+    # Ableton Live 12 Standard (Education) is manual-download only (ableton.com) — no winget package.
+    #   Live 12 bundles Max for Live in every edition (was Suite-only in Live 11).
+    #   VST plugins (ValhallaDSP FreqEcho/SpaceModulator/Supermassive) are also manual — valhalladsp.com.
+    # ArtCraft Launcher (+ PhotoCraft/FilmCraft/LightCraft modules) — manual install, handled separately.
+    #   LightCraft holds the AI RAW denoise ONNX models (Okeinla-NAFNet, RawNIND-Bayer) — see
+    #   ~/Pictures/AI Denoise Model and %AppData%/LightCraft/denoise-models.
+    # Novation Components (Launchkey Mini MK4 Custom Mode editor) is manual-download only — no winget package.
 
     # Utilities
     "7zip.7zip"
@@ -301,7 +314,7 @@ reg add "HKLM\SOFTWARE\Microsoft\MSMQ\Parameters" /v TCPNoDelay /t REG_DWORD /d 
 # Disable hibernation (saves space on NVMe, not needed for desktop)
 powercfg /hibernate off
 
-# Disable USB selective suspend (prevents USB audio dropouts on UMC22)
+# Disable USB selective suspend (prevents USB audio dropouts on the MiniFuse 4)
 powercfg /setacvalueindex SCHEME_CURRENT 2a737441-1930-4402-8d77-b2bebba308a3 48e6b7a6-50f5-4782-a5d4-53bb8f07e226 0
 powercfg /setactive SCHEME_CURRENT
 
@@ -689,9 +702,15 @@ Wait-ForUser `
 
 # --- Audio ---
 Wait-ForUser `
-    "Install Behringer UMC22 drivers" `
-    "Download ASIO driver from: behringer.com/downloads > UMC22" `
-    "After install, set UMC22 as default audio output in Sound Settings."
+    "Install Arturia MiniFuse 4 drivers" `
+    "Download Arturia Software Center from arturia.com, then install the MiniFuse driver + Control Center through it." `
+    "After install, set MiniFuse 4 as default audio output in Sound Settings. Replaced the Behringer UMC22."
+
+# --- MIDI controller ---
+Wait-ForUser `
+    "Set up Launchkey Mini MK4 + AutoMIDIcally" `
+    "Install Novation Components (components.novationmusic.com) to configure Custom Mode 4 (knobs = CC 21-28, channel 1)." `
+    "Then grab automidically-windows-amd64.exe from git.auengun.net/GregoryDosh/automidically and drop the prepared config.yml (~/Desktop/AutoMIDIcally) next to it for per-app volume control."
 
 # --- Tailscale ---
 Wait-ForUser `

@@ -122,7 +122,7 @@ Key manual steps:
 1. **WSL Ubuntu** — create user, run install-wsl.sh
 2. **NVIDIA drivers** — Game Ready Driver via NVIDIA App
 3. **GPU Undervolt** — MSI Afterburner, target ~1920MHz @ 875mV (see wizard guide)
-4. **Behringer UMC22** — ASIO driver from behringer.com
+4. **Arturia MiniFuse 4** — driver + Control Center via Arturia Software Center (arturia.com)
 5. **Tailscale** — sign in, reconnect to Linux box
 6. **Browser/Apps** — Zen Browser, 1Password, Steam, Valorant, Discord, Spotify
 7. **VS Code** — Settings Sync or manual extension install
@@ -156,12 +156,15 @@ C:\Backups\             Local backups
 - Everything (file search)
 - PowerToys (window management)
 
+**Explicitly disabled:** Microsoft Teams (toggled off via Startup Apps
+2026-10-27 — was launching on login despite not being needed there).
+
 **Launch on demand (everything else):**
 - Steam, Discord, Spotify, Docker, Zen Browser, etc.
 
 ---
 
-## System Snapshot (last verified 2026-09-05)
+## System Snapshot (last verified 2026-10-27)
 
 A point-in-time record of what's actually on the machine, kept here so a future
 rebuild has a ground truth to check `post-install.ps1`'s package list against.
@@ -170,46 +173,75 @@ Update this section whenever you do a real audit — it will drift otherwise.
 **Peripherals:** Blue Yeti X mic (Logitech G Blue VO!CE / HX2E), Sony WH-1000XM3
 Bluetooth headphones, BenQ ZOWIE XL monitor, Logitech G mouse/keyboard (G HUB),
 a USB macro pad (not friendly-named in Device Manager — identify visually if
-replacing).
+replacing), **Novation Launchkey Mini MK4** (MIDI keyboard; Custom Mode 4 knobs
+send CC 21-28 on channel 1, configured via Novation Components — config intent
+mirrored in `~/Desktop/AutoMIDIcally/config.yml` for per-app volume control).
 
 **Audio devices:** Realtek HD Audio (onboard), NVIDIA HDMI audio, Sonic Studio
-Virtual Mixer (motherboard audio suite), VB-Audio Virtual Cable (installed
-2026-09-05 via Chocolatey — see package list above).
+Virtual Mixer (motherboard audio suite), VB-Audio Virtual Cable, **Arturia
+MiniFuse 4** (USB audio interface — replaced the Behringer UMC22; driver +
+Control Center via Arturia Software Center, manual install, no winget package).
 
-**Network:** Tailscale installed as a service (connects to the Linux box).
-WSL has two distros registered: `Ubuntu` (primary dev env) and `docker-desktop`
-(auto-created by Docker Desktop's WSL integration — not something to install
-separately).
+**Network:** Tailscale installed as a service (connects to the Linux box at
+`\\pop-os\stef`, mapped as `Z:` — used as the offsite backup target for the
+Ableton library and the AI denoise models). WSL has two distros registered:
+`Ubuntu` (primary dev env) and `docker-desktop` (auto-created by Docker
+Desktop's WSL integration — not something to install separately).
 
 **Power:** Ultimate Performance power plan confirmed active (this plan is
 hidden by default in Win11 — `post-install.ps1` unhides and activates it).
 
+**Creative suite (manual installs, no winget packages):**
+- **Ableton Live 12 Standard** (Education license) — replaced the Trial
+  (uninstalled 2026-10, project files kept, live under `~/Documents/Ableton/`
+  independent of the app install). Live 12 bundles Max for Live in every
+  edition. VST plugins: ValhallaDSP FreqEcho / SpaceModulator / Supermassive.
+- **ArtCraft Launcher** with its **PhotoCraft**, **FilmCraft**, and
+  **LightCraft** modules — installed 2026-10-26. LightCraft holds the AI RAW
+  denoise ONNX models (`Okeinla-NAFNet`, `RawNIND-Bayer`) under
+  `%AppData%\LightCraft\denoise-models\`; source copies + licences live at
+  `~/Pictures/AI Denoise Model/` and are mirrored to `Z:\AI Denoise Model\`.
+- **Novation Components** — Launchkey Mini MK4 firmware/Custom Mode editor.
+
 **Dev environment:**
-- Repos under `~/Dev/repos/`: `dotfiles`, `mc-server`, `00start.com`, `stef-cv`,
-  `00start/codex-proxy`, `00start/riskscan` (+ a `riskscan-dataroom-fix`
-  checkout of the same remote). **`music-visualizer` has no git remote and no
-  commits pushed anywhere — it will be lost on a wipe unless pushed first.**
+- Repos under `~/Dev/repos/`: `dotfiles`, `mc-server`, `00start.com`,
+  `00start-ui`, `stef-cv`, `ai-stack-notes`, `bristol-cs-tracker`, `ci-runner`,
+  `desk-volume-knobs`, `earthng`, `m4l-pedals`, `meal-planner`,
+  `minifuse-panel`, `music-overlay`, `music-visualizer`, `ui-catalog`
+  (+ `graphify-out`, a generated knowledge-graph output dir, not its own repo).
+  `music-visualizer` is now pushed to GitHub (previous gap resolved).
+  **`m4l-pedals` has no git remote and no commits pushed anywhere — it will
+  be lost on a wipe unless pushed first.**
 - Toolchains: Node (plain install, not nvm-windows, on the Windows side —
-  nvm/NVM-managed Node lives inside WSL instead), Python 3.13, Git, Rust via
-  rustup, Docker Desktop. Go is not installed.
+  nvm/NVM-managed Node lives inside WSL instead), Python 3.13 *and* 3.12
+  (3.12 added for `music-overlay`'s `winsdk` dependency, which has no cp313
+  wheel), Git, Rust via rustup, Go, Docker Desktop.
 - SSH keys in `C:\Users\stef\.ssh\`: `id_ed25519_github`, `id_ed25519_dev_server`
   — separate from the WSL-side `~/.ssh` (WSL has its own keypair).
 - VS Code: ~48 extensions (GitLens, Remote-SSH/WSL/Containers, Python/Pylance,
   Tailscale, Nord theme, Material Icons, Vim).
+- **Google Chrome** installed alongside Zen Browser specifically so the
+  `claude-in-chrome` MCP extension has a Chrome target for browser automation.
+- **Ollama** (local LLM runner — see `~/Dev/repos/ai-stack-notes`), **Postman**
+  (API client) added to the dev-tools winget list.
 
 **Known gaps as of this snapshot:**
-- The **F:\ backup drive was not attached** when this snapshot was taken —
-  reattach and re-verify `F:\PC Backup\` and `F:\Dotfiles\` still hold what
-  the restore tables below expect before relying on them.
-- The frozen copy at `Documents\setup info\Dotfiles\` had drifted from this
-  repo (missing the `powershell/`, `oh-my-posh/`, `windows-terminal/`,
-  `fastfetch/` additions) — re-synced from this repo on 2026-09-05. Re-sync it
-  again any time this repo's `windows/` (or other) content changes, since the
-  whole point of that copy is to be readable before git/network is available.
+- The **F:\ backup drive is not currently attached** — reattach and re-verify
+  `F:\PC Backup\` and `F:\Dotfiles\` still hold what the restore tables below
+  expect before relying on them. `Z:\` (`\\pop-os\stef`) is the live backup
+  target in the meantime (Ableton library, AI denoise models).
+- The frozen copy at `Documents\setup info\Dotfiles\` should be re-synced from
+  this repo now that `windows/post-install.ps1` and `windows-setup.md` changed
+  again — the whole point of that copy is to be readable before git/network
+  is available.
 - Chocolatey's `vb-cable` package installs the wrong-architecture driver on
   64-bit Windows (uses a 32-bit INF via `rundll32` regardless of OS arch) —
   `post-install.ps1` now runs the real `VBCABLE_Setup_x64.exe -i -h` after it
   as a workaround. Re-check if the choco package ever gets fixed upstream.
+- AutoMIDIcally (Launchkey CC → per-app volume) is prepared but not yet
+  installed: config written to `~/Desktop/AutoMIDIcally/config.yml`, binary
+  needs manually downloading from `git.auengun.net/GregoryDosh/automidically`
+  (self-hosted, so not something to auto-download in this script).
 
 ---
 
