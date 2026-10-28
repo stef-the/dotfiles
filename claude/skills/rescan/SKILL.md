@@ -46,6 +46,10 @@ Note: Blackboard's Ultra SPA needs ~3s wait after navigation before content hydr
 
 Search `https://outlook.office.com/mail/` for anything relevant since the last rescan (Study Abroad, course admin, deadlines). Cross-check any date/deadline claims against the actual email body, not just the subject line — one past rescan found a vault date was wrong (25 Sep vs. the real 29 Sep) because a slide deck had been mis-transcribed; the email itself was the authoritative source.
 
+## Step 3b — Teams (UoB, qf25937@bristol.ac.uk)
+
+`https://teams.microsoft.com/` in Chrome (same SSO session). Read the SEP group chat ("Spontai"), the DM with Mihir Gandecha, and Amy Jose (mentor) if present. `get_page_text` only works once the chat has rendered — wait a few seconds, scroll up if needed. Pull out: meeting times/places (Mon = Mihir, Wed = Amy, Thu = library), tasks assigned to Stef, deadlines, shared links. Anything actionable goes into Step 5 (vault + tracker) and Step 6b (Notion). Read-only: never send a Teams message without explicit permission in chat.
+
 ## Step 4 — Personal (stefan@xopa.com)
 
 Only if relevant to the ask (e.g. shopping orders, personal deadlines) — search `https://mail.google.com/mail/` (already signed in). Don't dig through this account unprompted; it's personal, not part of the standard Bristol sweep.
@@ -87,6 +91,16 @@ Check via the browser (`https://calendar.google.com/`, signed in as stefan@xopa.
 Only take manual action if:
 - The feed is missing something Blackboard/tracker.json knows about (e.g. it hasn't caught up with a very recent room change) — in that case, add a one-off event noting the correction, don't fight the feed.
 - The user asks for something the feed doesn't cover (e.g. a one-off drop-in, an external deadline like the Study Abroad EOI) — those go on as regular one-off events, same as any other calendar add.
+
+**Refresh, don't just check.** Also, every rescan, push any new dated item found in Steps 1-3b (deadlines, talks, panels, meeting changes, the Thu library block 10:00-13:00) onto the calendar as a one-off event if it isn't there yet, and fix any event whose time/room changed. Search the calendar first to avoid duplicates, and list what was added/changed in the Step 7 report.
+
+## Step 6b — Refresh Notion (Uni Tasks DB)
+
+Notion tools: `mcp__plugin_marketing_notion__*` (load via ToolSearch). Uni Tasks data source: `collection://b64ff944-c5d8-4111-81ae-3dcfca873ff9` (DB: https://app.notion.com/p/dff50cbfa6b44ec4a2901fdbf105e768). Query it, then reconcile with `Planning.md`/vault:
+- create a task for every new deadline/to-do found this rescan (title, unit, due date, status, link to the note where useful);
+- mark done anything the user has finished (check the vault's ticks/strikethroughs, not guesses);
+- fix due dates that changed; don't duplicate existing tasks.
+End the report with Notion links for everything open and due soon.
 
 ## Step 7 — Report back
 
