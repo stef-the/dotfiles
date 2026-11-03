@@ -67,3 +67,10 @@ Last verified: 2026-10-27.
 - Confirm CPU cooler model.
 - Confirm exact ASUS motherboard model (BIOS/SMBIOS strings are blank).
 - Confirm exact Logitech keyboard model.
+- **Try low-profile (15mm) bottom fans** (e.g. Noctua NF-A12x15) in place of
+  standard 25mm ones — clearance between the 3080 Ti FTW3 and the case floor
+  is tight enough that a standard-depth fan may sit flush against the GPU
+  shroud with no intake gap. Motivation: third PSU in a row developing
+  bearing-click noise, suspected heat/airflow (TU150's PSU intake draws from
+  inside the chassis, not fresh outside air) rather than a PSU defect — more
+  bottom airflow is the cheap thing to try before a case swap.
