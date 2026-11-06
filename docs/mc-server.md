@@ -68,6 +68,15 @@ None of that was wrong, it was just solving the wrong problem.
   (now `1.2.0`) — NetherNet support needs `1.1.0`+.
 - Confirmed working via the server log line **"Registered with the external
   signaling service"**, and a real client join shortly after.
+- **The actual reliable way to connect turned out to be the Warden
+  click-to-join link, not typing address:port into "Add Server."** Geyser
+  logs `Players can join at https://bluebadger.wdn.gg` on boot — this link
+  is stable across restarts (tied to a persisted identity in
+  `plugins/Geyser-Spigot/nethernet/`, not regenerated each time), and is now
+  surfaced directly in the panel (Dashboard + Bedrock page) as the
+  recommended method. Typing the raw tunnel address:port into Bedrock's
+  "Add Server" screen was unreliable with NetherNet even though the server
+  side was correctly configured — open the link on the device instead.
 
 The **old RakNet tunnel** (`chords-nationalism.tun.ply.gg:11169`) is now
 dead weight for Bedrock specifically — no current client will use it — but
@@ -75,15 +84,14 @@ it's harmless to leave running.
 
 ## Known gaps / open questions
 
-- **LAN Bedrock is untested under NetherNet.** Earlier in the session LAN
-  access looked broken (blamed on Docker Desktop's Windows UDP
-  port-forwarding not reaching real external devices) — but that testing
-  was all done *before* discovering the RakNet cutover, so the client was
-  never going to connect over LAN either way regardless of Docker's
-  forwarding behavior. That "Docker UDP forwarding is broken" conclusion may
-  have been a red herring the whole time. WebRTC/NetherNet can negotiate a
-  direct local-network path even when signaling goes through the internet —
-  worth retrying on LAN with the current setup before assuming it's broken.
+- **LAN Bedrock: confirmed working, but only via the Warden click-to-join
+  link — not the raw address:port.** Retested after the NetherNet setup;
+  typing the tunnel address into "Add Server" still failed on LAN, but
+  `https://bluebadger.wdn.gg` connected successfully. So the earlier
+  "Docker Desktop UDP forwarding is broken" conclusion was indeed a red
+  herring (it predated discovering the RakNet cutover) — the real fix for
+  LAN turned out to be the same as remote: use the Warden link, not a
+  manually-typed address.
 - CoreProtect-CE's own update-checker throws a harmless
   `NullPointerException` on its network ping (its own bug, not ours).
 - The GeyserMC GitHub issue that matched this exact symptom
